@@ -1,0 +1,11 @@
+digraph "/sam/repos/open-source/fmtm/src/backend/app/images"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_83c7eb4aad812b981700cf0adce5b6de {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="app", fontname="Helvetica", fontsize="10", URL="dir_83c7eb4aad812b981700cf0adce5b6de.html"]
+  dir_6c83a3e47f045bff04219446f70f5c81 [shape=box, label="images", style="filled,bold,", fillcolor="#edf0f7", color="grey25", URL="dir_6c83a3e47f045bff04219446f70f5c81.html"];
+  }
+}

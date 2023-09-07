@@ -1,0 +1,52 @@
+digraph "Graphical Class Hierarchy"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  rankdir="LR";
+  Node0 [label="Base",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",tooltip=" "];
+  Node0 -> Node1 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 [label="app.db.db_models.Background\lTasks",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1BackgroundTasks.html",tooltip=" "];
+  Node0 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="app.db.db_models.DbBuildings",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbBuildings.html",tooltip=" "];
+  Node0 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="app.db.db_models.DbFeatures",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbFeatures.html",tooltip=" "];
+  Node0 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="app.db.db_models.DbLicense",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbLicense.html",tooltip=" "];
+  Node0 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="app.db.db_models.DbMapping\lIssueCategory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbMappingIssueCategory.html",tooltip=" "];
+  Node0 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="app.db.db_models.DbOrganisation",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbOrganisation.html",tooltip=" "];
+  Node0 -> Node7 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node7 [label="app.db.db_models.DbOsmLines",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbOsmLines.html",tooltip=" "];
+  Node0 -> Node8 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node8 [label="app.db.db_models.DbProject",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbProject.html",tooltip=" "];
+  Node0 -> Node9 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node9 [label="app.db.db_models.DbProjectAOI",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbProjectAOI.html",tooltip=" "];
+  Node0 -> Node10 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node10 [label="app.db.db_models.DbProjectChat",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbProjectChat.html",tooltip=" "];
+  Node0 -> Node11 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node11 [label="app.db.db_models.DbProjectInfo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbProjectInfo.html",tooltip=" "];
+  Node0 -> Node12 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node12 [label="app.db.db_models.DbProject\lTeams",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbProjectTeams.html",tooltip=" "];
+  Node0 -> Node13 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node13 [label="app.db.db_models.DbQrCode",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbQrCode.html",tooltip=" "];
+  Node0 -> Node14 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node14 [label="app.db.db_models.DbTask",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbTask.html",tooltip=" "];
+  Node0 -> Node15 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node15 [label="app.db.db_models.DbTaskHistory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbTaskHistory.html",tooltip=" "];
+  Node0 -> Node16 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node16 [label="app.db.db_models.DbTaskInvalidation\lHistory",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbTaskInvalidationHistory.html",tooltip=" "];
+  Node0 -> Node17 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node17 [label="app.db.db_models.DbTaskMapping\lIssue",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbTaskMappingIssue.html",tooltip=" "];
+  Node0 -> Node18 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node18 [label="app.db.db_models.DbTeam",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbTeam.html",tooltip=" "];
+  Node0 -> Node19 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node19 [label="app.db.db_models.DbTilesPath",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbTilesPath.html",tooltip=" "];
+  Node0 -> Node20 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node20 [label="app.db.db_models.DbUser",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbUser.html",tooltip=" "];
+  Node0 -> Node21 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node21 [label="app.db.db_models.DbUserRoles",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbUserRoles.html",tooltip=" "];
+  Node0 -> Node22 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node22 [label="app.db.db_models.DbXForm",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classapp_1_1db_1_1db__models_1_1DbXForm.html",tooltip=" "];
+}

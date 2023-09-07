@@ -1,0 +1,26 @@
+digraph "/sam/repos/open-source/fmtm/src/backend/app"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  compound=true
+  subgraph clusterdir_3f615ade772d23cefe5e20dcb18424a2 {
+    graph [ bgcolor="#edf0f7", pencolor="grey50", style="filled,dashed,", label="backend", fontname="Helvetica", fontsize="10", URL="dir_3f615ade772d23cefe5e20dcb18424a2.html"]
+  subgraph clusterdir_83c7eb4aad812b981700cf0adce5b6de {
+    graph [ bgcolor="#edf0f7", pencolor="grey25", style="filled,bold,", label="", fontname="Helvetica", fontsize="10", URL="dir_83c7eb4aad812b981700cf0adce5b6de.html"]
+    dir_83c7eb4aad812b981700cf0adce5b6de [shape=plaintext, label="app"];
+  dir_7fa2196ed233ae28e7f5eb783bc529c7 [shape=box, label="auth", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_7fa2196ed233ae28e7f5eb783bc529c7.html"];
+  dir_f4f832b8889113021bd18ee7d835548a [shape=box, label="central", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_f4f832b8889113021bd18ee7d835548a.html"];
+  dir_db2587956e68707a43f40b3bd1987629 [shape=box, label="db", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_db2587956e68707a43f40b3bd1987629.html"];
+  dir_6c83a3e47f045bff04219446f70f5c81 [shape=box, label="images", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_6c83a3e47f045bff04219446f70f5c81.html"];
+  dir_3b90816b8e609c736a7de6fb45efc502 [shape=box, label="models", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_3b90816b8e609c736a7de6fb45efc502.html"];
+  dir_4fe324bae751b96097bd26cd25b0aa46 [shape=box, label="organization", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_4fe324bae751b96097bd26cd25b0aa46.html"];
+  dir_0309c3ef90140845fb35dbcaf91a6f02 [shape=box, label="pagination", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_0309c3ef90140845fb35dbcaf91a6f02.html"];
+  dir_436f26b891d4af2ccc6c41e5d8c849c4 [shape=box, label="projects", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_436f26b891d4af2ccc6c41e5d8c849c4.html"];
+  dir_c5f9fb83722815006bdedd511b5ab00f [shape=box, label="submission", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_c5f9fb83722815006bdedd511b5ab00f.html"];
+  dir_bc90566805e8f5303dce0d551076836d [shape=box, label="tasks", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_bc90566805e8f5303dce0d551076836d.html"];
+  dir_909f6e2c185d78f3a848820b4af5dbe0 [shape=box, label="test_data", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_909f6e2c185d78f3a848820b4af5dbe0.html"];
+  dir_3a4f145ab5844076f30fd0be88005dbb [shape=box, label="users", style="filled,", fillcolor="#a2b4d6", color="grey25", URL="dir_3a4f145ab5844076f30fd0be88005dbb.html"];
+  }
+  }
+}
