@@ -43,17 +43,25 @@ from ..users import user_crud
 
 
 async def get_task_count_in_project(db: Session, project_id: int):
-    query = f"""select count(*) from tasks where project_id = {project_id}"""
+    query = text(f"""select count(*) from tasks where project_id = {project_id}""")
     result = db.execute(query)
     return result.fetchone()[0]
 
 
 def get_task_lists(db: Session, project_id: int):
     """Get a list of tasks for a project."""
-    query = f"""select id from tasks where project_id = {project_id}"""
-    result = db.execute(query)
-    tasks = [task[0] for task in result.fetchall()]
-    return tasks
+    query = text("""
+        SELECT id
+        FROM tasks
+        WHERE project_id = :project_id
+    """)
+
+    # Then execute the query with the desired parameter
+    result = db.execute(query, {"project_id": project_id})
+
+    # Fetch the result
+    task_ids = [row.id for row in result]
+    return task_ids
 
 
 def get_tasks(

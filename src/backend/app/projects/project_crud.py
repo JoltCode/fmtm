@@ -37,6 +37,7 @@ import requests
 import segno
 import shapely.wkb as wkblib
 import sqlalchemy
+import pkg_resources
 from fastapi import File, HTTPException, UploadFile
 from geoalchemy2.shape import from_shape
 from geojson import dump
@@ -44,11 +45,13 @@ from osm_fieldwork import basemapper
 from osm_fieldwork.make_data_extract import PostgresClient
 from osm_fieldwork.OdkCentral import OdkAppUser
 from osm_fieldwork.xlsforms import xlsforms_path
+from osm_fieldwork import json2osm
 from shapely import wkt
 from shapely.geometry import MultiPolygon, Polygon, mapping, shape
 from sqlalchemy import and_, column, func, inspect, select, table
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.orm import Session
+from sqlalchemy import text
 from sqlalchemy.sql import text
 from cpuinfo import get_cpu_info
 from ..db import database
@@ -435,14 +438,13 @@ def update_multi_polygon_project_boundary(
             )
             db.commit()
 
-        # Generate project outline from tasks
-        # query = f'''SELECT ST_AsText(ST_Buffer(ST_Union(outline), 0.5, 'endcap=round')) as oval_envelope
-        #            FROM tasks
-        #           where project_id={project_id};'''
 
-        query = f"""SELECT ST_AsText(ST_ConvexHull(ST_Collect(outline)))
-                    FROM tasks
-                    WHERE project_id={project_id};"""
+
+        # Generate project outline from tasks
+        query = text(f"""SELECT ST_AsText(ST_ConvexHull(ST_Collect(outline)))
+                        FROM tasks
+                        WHERE project_id={project_id};""")
+
         log.debug("Generating project outline from tasks")
         result = db.execute(query)
         data = result.fetchone()
@@ -615,83 +617,107 @@ def get_osm_extracts(boundary: str):
 
     return data
 
-
 async def split_into_tasks(
-    db: Session, boundary: str, no_of_buildings: int, has_data_extracts: bool = False
+    db: Session, boundary: str, no_of_buildings: int, has_data_extracts:bool
 ):
+    """
+    Splits a project into tasks.
+    Args:
+        db (Session): A database session.
+        boundary (str): A GeoJSON string representing the boundary of the project to split into tasks.
+        no_of_buildings (int): The number of buildings to include in each task.
+    Returns:
+        Any: A GeoJSON object containing the tasks for the specified project.
+    """
     project_id = uuid.uuid4()
-
     outline = json.loads(boundary)
+    all_results = []
+    boundary_data = []
+    result = []
+    if outline['type'] == "FeatureCollection":
+        boundary_data.extend(feature["geometry"] for feature in outline["features"])
+        result.extend(
+            process_polygon(db, project_id, data, no_of_buildings, has_data_extracts)
+            for data in boundary_data
+            )
+        for inner_list in result:
+            all_results.extend(iter(inner_list))
 
-    if outline.get("features", None) is not None:
-        boundary_data = outline["features"][0]["geometry"]
+    elif outline['type'] == "GeometryCollection":
+        geometries = outline["geometries"]
+        boundary_data.extend(iter(geometries))
+        result.extend(
+            process_polygon(db, project_id, data, no_of_buildings, has_data_extracts)
+            for data in boundary_data
+            )
+        for inner_list in result:
+            all_results.extend(iter(inner_list))
+
+    elif outline['type'] == "Feature":
+        boundary_data = outline["geometry"]
+        result = process_polygon(db, project_id, boundary_data, no_of_buildings, has_data_extracts)
+        all_results.extend(iter(result))
     else:
         boundary_data = outline
-    outline = shape(boundary_data)
+        result = process_polygon(db, project_id, boundary_data, no_of_buildings, has_data_extracts)
+        all_results.extend(result)
+    return {
+        "type": "FeatureCollection",
+        "features": all_results,
+    }
 
+
+def process_polygon(db:Session, project_id:uuid.UUID, boundary_data:str, no_of_buildings:int, has_data_extracts: bool):
+    outline = shape(boundary_data)
     db_task = db_models.DbProjectAOI(
         project_id=project_id,
         geom=outline.wkt,
     )
-
     db.add(db_task)
     db.commit()
 
     if not has_data_extracts:
         data = get_osm_extracts(json.dumps(boundary_data))
-
         if not data:
             return None
-
         for feature in data["features"]:
-            # If the osm extracts contents do not have a title, provide an empty text for that.
-            feature_shape = shape(feature["geometry"])
-
+            feature_shape = shape(feature['geometry'])
             wkb_element = from_shape(feature_shape, srid=4326)
-
-            if feature["properties"].get("building") == "yes":
+            if feature['properties'].get('building') == 'yes':
                 db_feature = db_models.DbBuildings(
                     project_id=project_id,
                     geom=wkb_element,
                     tags=feature["properties"]
-                    # category="buildings"
                 )
                 db.add(db_feature)
-                db.commit()
-
-            elif "highway" in feature["properties"]:
+            elif 'highway' in feature['properties']:
                 db_feature = db_models.DbOsmLines(
-                    project_id=project_id, geom=wkb_element, tags=feature["properties"]
+                    project_id=project_id,
+                    geom=wkb_element,
+                    tags=feature["properties"]
                 )
-
                 db.add(db_feature)
-                db.commit()
+
+        db.commit()
     else:
         # Remove the polygons outside of the project AOI using a parameterized query
-        query = f"""
+        query = text(f"""
                     DELETE FROM ways_poly
                     WHERE NOT ST_Within(ST_Centroid(ways_poly.geom), (SELECT geom FROM project_aoi WHERE project_id = '{project_id}'));
-                """
+                """)
         result = db.execute(query)
         db.commit()
-
-    # Get the sql query from split_algorithm sql file
-    with open("app/db/split_algorithm.sql", "r") as sql_file:
+    with open('app/db/split_algorithm.sql', 'r') as sql_file:
         query = sql_file.read()
-
-    # Execute the query with the parameter using the `params` parameter
-    result = db.execute(query, params={"num_buildings": no_of_buildings})
-
-    # result = db.execute(query)
-    data = result.fetchall()[0]
-    final_geojson = data["jsonb_build_object"]
-
+    result = db.execute(text(query), params={'num_buildings': no_of_buildings})
+    result = result.fetchall()
     db.query(db_models.DbBuildings).delete()
     db.query(db_models.DbOsmLines).delete()
     db.query(db_models.DbProjectAOI).delete()
     db.commit()
 
-    return final_geojson
+    return result[0][0]['features']
+
 
 
 # def update_project_boundary(
@@ -1019,9 +1045,15 @@ def read_xlsforms(
 ):
     """Read the list of XLSForms from the disk."""
     xlsforms = list()
+    package_name = "osm_fieldwork"
     for xls in os.listdir(directory):
         if xls.endswith(".xls") or xls.endswith(".xlsx"):
-            xlsforms.append(xls)
+            file_name = xls.split(".")[0]
+            yaml_file_name = f"data_models/{file_name}.yaml"
+            if pkg_resources.resource_exists(package_name,yaml_file_name):
+                xlsforms.append(xls)
+            else:
+                continue
     log.info(xls)
     inspect(db_models.DbXForm)
     forms = table(
@@ -1139,6 +1171,9 @@ def generate_task_files(
     form_type: str,
     odk_credentials: project_schemas.ODKCentral,
 ):
+    project_log = log.bind(task="create_project", project_id=project_id)
+
+    project_log.info(f"Generating files for task {task_id}")
     project = get_project(db, project_id)
     odk_id = project.odkid
     project_name = project.project_name_prefix
@@ -1146,14 +1181,16 @@ def generate_task_files(
     name = f"{project_name}_{category}_{task_id}"
 
     # Create an app user for the task
+    project_log.info(f"Creating app user for task {task_id}")
     appuser = central_crud.create_appuser(odk_id, name, odk_credentials)
 
     # If app user could not be created, raise an exception.
     if not appuser:
-        log.error(f"Couldn't create appuser for project {project_id}")
+        project_log.error(f"Couldn't create appuser for project")
         return False
 
     # prefix should be sent instead of name
+    project_log.info(f"Creating qr code for task {task_id}")
     create_qr = create_qrcode(
         db,
         odk_id,
@@ -1177,7 +1214,7 @@ def generate_task_files(
     # Get the features for this task.
     # Postgis query to filter task inside this task outline and of this project
     # Update those features and set task_id
-    query = f"""UPDATE features
+    query = text(f"""UPDATE features
                 SET task_id={task_id}
                 WHERE id IN (
                     SELECT id
@@ -1186,12 +1223,12 @@ def generate_task_files(
                     AND ST_IsValid(geometry)
                     AND ST_IsValid('{task.outline}'::Geometry)
                     AND ST_Contains('{task.outline}'::Geometry, ST_Centroid(geometry))
-                )"""
+                )""")
 
     result = db.execute(query)
 
     # Get the geojson of those features for this task.
-    query = f"""SELECT jsonb_build_object(
+    query = text(f"""SELECT jsonb_build_object(
                 'type', 'FeatureCollection',
                 'features', jsonb_agg(feature)
                 )
@@ -1204,21 +1241,29 @@ def generate_task_files(
                 ) AS feature
                 FROM features
                 WHERE project_id={project_id} and task_id={task_id}
-                ) features;"""
+                ) features;""")
 
     result = db.execute(query)
+
     features = result.fetchone()[0]
+
+    upload_media = False if features['features'] is None else True
 
     # Update outfile containing osm extracts with the new geojson contents containing title in the properties.
     with open(extracts, "w") as jsonfile:
         jsonfile.truncate(0)  # clear the contents of the file
         dump(features, jsonfile)
 
+    project_log.info(f"Generating xform for task {task_id}")
     outfile = central_crud.generate_updated_xform(xlsform, xform, form_type)
 
-    # Create an odk xform
-    result = central_crud.create_odk_xform(odk_id, task_id, outfile, odk_credentials)
 
+    # Create an odk xform
+    project_log.info(f"Uploading media in {task_id}")
+    result = central_crud.create_odk_xform(odk_id, task_id, outfile, odk_credentials, False, upload_media)
+    # result = central_crud.create_odk_xform(odk_id, task_id, outfile, odk_credentials)
+
+    project_log.info(f"Updating role for app user in task {task_id}")
     # Update the user role for the created xform.
     try:
         # Pass odk credentials
@@ -1278,7 +1323,9 @@ def generate_appuser_files(
         - background_task_id: the task_id of the background task running this function.
     """
     try:
-        log.info(f"Starting generate_appuser_files for project {project_id}")
+        project_log = log.bind(task="create_project", project_id=project_id)
+        
+        project_log.info(f"Starting generate_appuser_files for project {project_id}")
 
         # Get the project table contents.
         project = table(
@@ -1340,9 +1387,12 @@ def generate_appuser_files(
 
             # Data Extracts
             if extracts_contents is not None:
+                project_log.info(f"Uploading data extracts")
                 upload_custom_data_extracts(db, project_id, extracts_contents)
 
             else:
+                project_log.info(f"Extracting Data from OSM")
+
                 # OSM Extracts for whole project
                 pg = PostgresClient("https://raw-data-api0.hotosm.org/v1", "underpass")
                 # This file will store osm extracts
@@ -1402,7 +1452,7 @@ def generate_appuser_files(
             for task in tasks_list:
                 try:
                     generate_task_files(
-                        db, project_id, task, xlsform, form_type, odk_credentials
+                        db, project_id, task, xlsform, form_type, odk_credentials,
                     )
                 except Exception as e:
                     log.warning(str(e))
@@ -1499,7 +1549,7 @@ def get_task_geometry(db: Session, project_id: int):
 async def get_project_features_geojson(db:Session, project_id:int):
 
     # Get the geojson of those features for this task.
-    query = f"""SELECT jsonb_build_object(
+    query = text(f"""SELECT jsonb_build_object(
                 'type', 'FeatureCollection',
                 'features', jsonb_agg(feature)
                 )
@@ -1513,7 +1563,7 @@ async def get_project_features_geojson(db:Session, project_id:int):
                 FROM features
                 WHERE project_id={project_id}
                 ) features;
-            """
+            """)
 
     result = db.execute(query)
     features = result.fetchone()[0]
@@ -1866,7 +1916,6 @@ def update_background_task_status_in_database(
 
 def add_features_into_database(
     db: Session,
-    project_id: int,
     features: dict,
     background_task_id: uuid.UUID,
     feature_type: str,
@@ -1880,6 +1929,7 @@ def add_features_into_database(
     try:
         success = 0
         failure = 0
+        project_id = uuid.uuid4()
         if feature_type == "buildings":
             for feature in features["features"]:
                 try:
@@ -1887,15 +1937,6 @@ def add_features_into_database(
                     feature_shape = shape(feature_geometry)
 
                     wkb_element = from_shape(feature_shape, srid=4326)
-                    feature_obj = db_models.DbFeatures(
-                        project_id=project_id,
-                        category_title="buildings",
-                        geometry=wkb_element,
-                        properties=feature["properties"],
-                    )
-                    db.add(feature_obj)
-                    db.commit()
-
                     building_obj = db_models.DbBuildings(
                         project_id=project_id,
                         geom=wkb_element,
@@ -2047,7 +2088,7 @@ async def update_project_form(
         # Get the features for this task.
         # Postgis query to filter task inside this task outline and of this project
         # Update those features and set task_id
-        query = f"""UPDATE features
+        query = text(f"""UPDATE features
                     SET task_id={task}
                     WHERE id in (
                     
@@ -2055,12 +2096,12 @@ async def update_project_form(
                     FROM features
                     WHERE project_id={project_id} and ST_Intersects(geometry, '{task_obj.outline}'::Geometry)
 
-                    )"""
+                    )""")
 
         result = db.execute(query)
 
         # Get the geojson of those features for this task.
-        query = f"""SELECT jsonb_build_object(
+        query = text(f"""SELECT jsonb_build_object(
                     'type', 'FeatureCollection',
                     'features', jsonb_agg(feature)
                     )
@@ -2073,7 +2114,7 @@ async def update_project_form(
                     ) AS feature
                     FROM features
                     WHERE project_id={project_id} and task_id={task}
-                    ) features;"""
+                    ) features;""")
 
         result = db.execute(query)
         features = result.fetchone()[0]
@@ -2113,7 +2154,7 @@ async def update_odk_credentials(
 
 async def get_extracted_data_from_db(db: Session, project_id: int, outfile: str):
     """Get the geojson of those features for this project."""
-    query = f"""SELECT jsonb_build_object(
+    query = text(f"""SELECT jsonb_build_object(
                 'type', 'FeatureCollection',
                 'features', jsonb_agg(feature)
                 )
@@ -2126,7 +2167,7 @@ async def get_extracted_data_from_db(db: Session, project_id: int, outfile: str)
                 ) AS feature
                 FROM features
                 WHERE project_id={project_id}
-                ) features;"""
+                ) features;""")
 
     result = db.execute(query)
     features = result.fetchone()[0]
@@ -2167,7 +2208,7 @@ def get_project_tiles(
         db.commit()
 
         # Project Outline
-        query = f"""SELECT jsonb_build_object(
+        query = text(f"""SELECT jsonb_build_object(
                     'type', 'FeatureCollection',
                     'features', jsonb_agg(feature)
                     )
@@ -2179,7 +2220,7 @@ def get_project_tiles(
                     ) AS feature
                     FROM projects
                     WHERE id={project_id}
-                    ) features;"""
+                    ) features;""")
 
         result = db.execute(query)
         features = result.fetchone()[0]
@@ -2192,7 +2233,7 @@ def get_project_tiles(
             jsonfile.truncate(0)
             dump(features, jsonfile)
 
-        basemap = basemapper.BaseMapper(boundary_file, base, source)
+        basemap = basemapper.BaseMapper(boundary_file, base, source, False)
         outf = basemapper.DataFile(outfile, basemap.getFormat())
         suffix = os.path.splitext(outfile)[1]
         if suffix == ".mbtiles":
@@ -2255,3 +2296,8 @@ async def get_mbtiles_list(db: Session, project_id: int):
 
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
+async def convert_geojson_to_osm(geojson_file: str):
+    """Convert a GeoJSON file to OSM format."""
+    return json2osm(geojson_file)

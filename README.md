@@ -1,20 +1,22 @@
-![](images/hot_logo.png)
+![](https://github.com/hotosm/fmtm/blob/main/images/hot_logo.png?raw=true)
 
 [![All Contributors](https://img.shields.io/github/all-contributors/hotosm/fmtm?color=ee8449&style=flat-square)](#contributors-)
 
 **Production Workflows**
 
-| PyTest | Build & Deploy  | Wiki Docs |
-|---|---|---|
+| PyTest                                                                                                                                                      | Build & Deploy                                                                                                                                                                            | Wiki Docs                                                                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | [![pytest](https://github.com/hotosm/fmtm/actions/workflows/pytest.yml/badge.svg?branch=main)](https://github.com/hotosm/fmtm/actions/workflows/pytest.yml) | [![Build and Deploy](https://github.com/hotosm/fmtm/actions/workflows/build_and_deploy.yml/badge.svg?branch=main)](https://github.com/hotosm/fmtm/actions/workflows/build_and_deploy.yml) | [![Publish Docs to Wiki](https://github.com/hotosm/fmtm/actions/workflows/wiki.yml/badge.svg?branch=main)](https://github.com/hotosm/fmtm/actions/workflows/wiki.yml) |
 
 **Development Workflows**
 
-| PyTest | Build & Deploy  |
-|---|---|
+| PyTest                                                                                                                                                             | Build & Deploy                                                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | [![pytest](https://github.com/hotosm/fmtm/actions/workflows/pytest.yml/badge.svg?branch=development)](https://github.com/hotosm/fmtm/actions/workflows/pytest.yml) | [![Build and Deploy](https://github.com/hotosm/fmtm/actions/workflows/build_and_deploy.yml/badge.svg?branch=development)](https://github.com/hotosm/fmtm/actions/workflows/build_and_deploy.yml) |
 
 # Field Mapping Tasking Manager (FMTM)
+
+🕮 [Documentation](https://hotosm.github.io/fmtm/)
 
 A project to provide tools for Open Mapping campaigns
 

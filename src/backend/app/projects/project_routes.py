@@ -388,33 +388,26 @@ async def task_split(
     has_data_extracts: bool = Form(False),
     db: Session = Depends(database.get_db)
     ):
+    """
+    Split a task into subtasks.
+
+    Args:
+        upload (UploadFile): The file to split.
+        no_of_buildings (int, optional): The number of buildings per subtask. Defaults to 50.
+        db (Session, optional): The database session. Injected by FastAPI.
+
+    Returns:
+        The result of splitting the task into subtasks.
+        
+    """
 
     # read entire file
     await upload.seek(0)
     content = await upload.read()
-    content_json = json.loads(content)
 
-    results = []
-    feature_content_type = content_json.get("type")
-    if feature_content_type == "FeatureCollection":
-        feature_content = content_json["features"]
-    elif feature_content_type == "Feature":
-        feature_content = [content_json]
+    result = await project_crud.split_into_tasks(db, content, no_of_buildings, has_data_extracts)
 
-    for idx, _ in enumerate(feature_content):
-        _content = json.dumps(
-            {"features": [feature_content[idx]] })
-
-        result = await project_crud.split_into_tasks(db, _content, no_of_buildings, has_data_extracts)
-        results.append(result)
-
-    combined_geojson = {**content_json, "features": []}
-
-    for geo in results:
-        if geo.get("features", None):
-            combined_geojson["features"].extend(geo["features"])
-
-    return combined_geojson
+    return result
 
 
 @router.post("/{project_id}/upload")
@@ -694,10 +687,13 @@ async def generate_log(
             project_id, db
         )
 
-        with open(f"/tmp/{project_id}_generate.log", "r") as f:
-            lines = f.readlines()
-            last_100_lines = lines[-50:]
-            logs = "".join(last_100_lines)
+        with open("/opt/logs/create_project.json", "r") as log_file:
+            logs = [json.loads(line) for line in log_file]
+            
+            filtered_logs = [log.get("record",{}).get("message",None) for log in logs if log.get("record", {}).get("extra", {}).get("project_id") == project_id]
+            last_50_logs = filtered_logs[-50:]
+
+            logs = "\n".join(last_50_logs)
             return {
                 "status": task_status.name,
                 "message": task_message,
@@ -757,7 +753,6 @@ async def preview_tasks(upload: UploadFile = File(...), dimension: int = Form(50
 @router.post("/add_features/")
 async def add_features(
     background_tasks: BackgroundTasks,
-    project_id: int,
     upload: UploadFile = File(...),
     feature_type: str = Query(..., description="Select feature type ", enum=["buildings","lines"]),
     db: Session = Depends(database.get_db),
@@ -766,9 +761,9 @@ async def add_features(
 
     This endpoint allows you to add features to a project.
 
-    ## Request Body
-    - `project_id` (int): the project's id. Required.
-    - `upload` (file): Geojson files with the features. Required.
+    Request Body
+    - 'project_id' (int): the project's id. Required.
+    - 'upload' (file): Geojson files with the features. Required.
 
     """
     # Validating for .geojson File.
@@ -787,13 +782,12 @@ async def add_features(
 
     # insert task and task ID into database
     await project_crud.insert_background_task_into_database(
-        db, task_id=background_task_id, project_id=project_id
+        db, task_id=background_task_id
     )
 
     background_tasks.add_task(
         project_crud.add_features_into_database,
         db,
-        project_id,
         features,
         background_task_id,
         feature_type
@@ -1001,3 +995,57 @@ async def download_tiles(tile_id: int, db: Session = Depends(database.get_db)):
         tiles_path.path,
         headers={"Content-Disposition": "attachment; filename=tiles.mbtiles"},
     )
+
+
+@router.get("/boundary_in_osm/{project_id}/")
+async def download_task_boundary_osm(
+    project_id: int,
+    db: Session = Depends(database.get_db),
+):
+    """Downloads the boundary of a task as a OSM file.
+
+    Args:
+        project_id (int): The id of the project.
+
+    Returns:
+        Response: The HTTP response object containing the downloaded file.
+    """
+    out = project_crud.get_task_geometry(db, project_id)
+    file_path = f"/tmp/{project_id}_task_boundary.geojson"
+
+    # Write the response content to the file
+    with open(file_path, "w") as f:
+        f.write(out)
+    result = await project_crud.convert_geojson_to_osm(file_path)
+
+    with open(result, "r") as f:
+        content = f.read()
+
+    response = Response(content=content, media_type="application/xml")
+    return response
+
+from sqlalchemy.sql import text
+
+@router.get("/centroid/")
+async def project_centroid(
+                        project_id:int = None,
+                        db: Session = Depends(database.get_db),
+                        ):
+    """
+    Get a centroid of each projects.
+
+    Parameters:
+        project_id (int): The ID of the project.
+
+    Returns:
+        List[Tuple[int, str]]: A list of tuples containing the task ID and the centroid as a string.
+    """
+
+    query = text(f"""SELECT id, ARRAY_AGG(ARRAY[ST_X(ST_Centroid(outline)), ST_Y(ST_Centroid(outline))]) AS centroid
+            FROM projects
+            WHERE {f"id={project_id}" if project_id else "1=1"}
+            GROUP BY id;""")
+
+    result = db.execute(query)
+    result_dict_list = [{"id": row[0], "centroid": row[1]} for row in result.fetchall()]
+    return result_dict_list
