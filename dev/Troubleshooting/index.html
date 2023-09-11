@@ -10,28 +10,28 @@
       
       
       
-        <link rel="canonical" href="https://www.hotosm.org/Guide-On-Improving-Documentation/">
+        <link rel="canonical" href="https://www.hotosm.org/dev/Troubleshooting/">
       
       
-        <link rel="prev" href="../CONTRIBUTING/">
+        <link rel="prev" href="../Database-Tips/">
       
       
-        <link rel="next" href="../CODE_OF_CONDUCT/">
+        <link rel="next" href="../../swagger/">
       
       
-      <link rel="icon" href="../assets/images/favicon.png">
+      <link rel="icon" href="../../assets/images/favicon.png">
       <meta name="generator" content="mkdocs-1.5.2, mkdocs-material-9.2.8">
     
     
       
-        <title>Documentation Contribution - FMTM</title>
+        <title>Troubleshooting - FMTM</title>
       
     
     
-      <link rel="stylesheet" href="../assets/stylesheets/main.046329b4.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.046329b4.min.css">
       
         
-        <link rel="stylesheet" href="../assets/stylesheets/palette.85d0ee34.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.85d0ee34.min.css">
       
       
 
@@ -50,11 +50,11 @@
       
     
     
-      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+      <link rel="stylesheet" href="../../assets/_mkdocstrings.css">
     
-      <link rel="stylesheet" href="../css/extra.css">
+      <link rel="stylesheet" href="../../css/extra.css">
     
-    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -79,7 +79,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#structures-to-improve-github-documentation" class="md-skip">
+        <a href="#troubleshooting" class="md-skip">
           Skip to content
         </a>
       
@@ -95,7 +95,7 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href=".." title="FMTM" class="md-header__button md-logo" aria-label="FMTM" data-md-component="logo">
+    <a href="../.." title="FMTM" class="md-header__button md-logo" aria-label="FMTM" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -115,7 +115,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Documentation Contribution
+              Troubleshooting
             
           </span>
         </div>
@@ -201,7 +201,7 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href=".." title="FMTM" class="md-nav__button md-logo" aria-label="FMTM" data-md-component="logo">
+    <a href="../.." title="FMTM" class="md-nav__button md-logo" aria-label="FMTM" data-md-component="logo">
       
   
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
@@ -228,19 +228,17 @@
       
   
   
-    
-  
   
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" >
         
           <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
             
@@ -253,7 +251,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             Get Started
@@ -266,7 +264,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../About/" class="md-nav__link">
+      <a href="../../About/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -286,7 +284,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../INSTALL/" class="md-nav__link">
+      <a href="../../INSTALL/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -306,7 +304,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../CONTRIBUTING/" class="md-nav__link">
+      <a href="../../CONTRIBUTING/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -324,29 +322,9 @@
                 
   
   
-    
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Documentation Contribution
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../Guide-On-Improving-Documentation/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -355,90 +333,6 @@
   
 
       </a>
-      
-        
-
-  
-
-<nav class="md-nav md-nav--secondary" aria-label="Page contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Page contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#goals" class="md-nav__link">
-    Goals
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-documentation-types-on-github" class="md-nav__link">
-    Common Documentation Types On Github
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Documentation Types On Github">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-structure-for-product-documentation" class="md-nav__link">
-    1. Structure for Product Documentation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-structure-for-project-documentation" class="md-nav__link">
-    2. Structure for Project Documentation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-structure-for-system-documentation" class="md-nav__link">
-    3. Structure for System Documentation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-structure-for-process-documentation" class="md-nav__link">
-    4. Structure for Process Documentation
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#improving-existing-documentation" class="md-nav__link">
-    Improving Existing Documentation
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -450,7 +344,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../CODE_OF_CONDUCT/" class="md-nav__link">
+      <a href="../../CODE_OF_CONDUCT/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -470,7 +364,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../FAQ/" class="md-nav__link">
+      <a href="../../FAQ/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -531,7 +425,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../User-Manual-For-Project-Managers/" class="md-nav__link">
+      <a href="../../User-Manual-For-Project-Managers/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -556,17 +450,19 @@
       
   
   
+    
+  
   
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
             
@@ -579,7 +475,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Dev
@@ -592,7 +488,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/Setup/" class="md-nav__link">
+      <a href="../Setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -612,7 +508,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/Backend/" class="md-nav__link">
+      <a href="../Backend/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -632,7 +528,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/Frontend/" class="md-nav__link">
+      <a href="../Frontend/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -652,7 +548,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/Production/" class="md-nav__link">
+      <a href="../Production/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -672,7 +568,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/Docker-Tips/" class="md-nav__link">
+      <a href="../Docker-Tips/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -692,7 +588,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dev/Database-Tips/" class="md-nav__link">
+      <a href="../Database-Tips/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -710,9 +606,29 @@
                 
   
   
+    
   
-    <li class="md-nav__item">
-      <a href="../dev/Troubleshooting/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Troubleshooting
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -721,6 +637,48 @@
   
 
       </a>
+      
+        
+
+  
+
+<nav class="md-nav md-nav--secondary" aria-label="Page contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Page contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-fmtm-standalone" class="md-nav__link">
+    Running FMTM standalone
+  </a>
+  
+    <nav class="md-nav" aria-label="Running FMTM standalone">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#tips" class="md-nav__link">
+    Tips
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -739,7 +697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../swagger/" class="md-nav__link">
+      <a href="../../swagger/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -758,7 +716,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../apidocs/html/inherits.html" class="md-nav__link">
+      <a href="../../apidocs/html/inherits.html" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -800,64 +758,22 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#overview" class="md-nav__link">
-    Overview
+  <a href="#running-fmtm-standalone" class="md-nav__link">
+    Running FMTM standalone
   </a>
   
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#goals" class="md-nav__link">
-    Goals
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#common-documentation-types-on-github" class="md-nav__link">
-    Common Documentation Types On Github
-  </a>
-  
-    <nav class="md-nav" aria-label="Common Documentation Types On Github">
+    <nav class="md-nav" aria-label="Running FMTM standalone">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
-  <a href="#1-structure-for-product-documentation" class="md-nav__link">
-    1. Structure for Product Documentation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-structure-for-project-documentation" class="md-nav__link">
-    2. Structure for Project Documentation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#3-structure-for-system-documentation" class="md-nav__link">
-    3. Structure for System Documentation
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#4-structure-for-process-documentation" class="md-nav__link">
-    4. Structure for Process Documentation
+  <a href="#tips" class="md-nav__link">
+    Tips
   </a>
   
 </li>
         
       </ul>
     </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#improving-existing-documentation" class="md-nav__link">
-    Improving Existing Documentation
-  </a>
   
 </li>
       
@@ -879,150 +795,45 @@
   
 
 
-<h1 id="structures-to-improve-github-documentation">Structures To Improve GitHub Documentation<a class="headerlink" href="#structures-to-improve-github-documentation" title="Permanent link">&para;</a></h1>
-<h2 id="overview">Overview<a class="headerlink" href="#overview" title="Permanent link">&para;</a></h2>
-<p>An overall documentation structure outline, that cuts across;
-<strong>Project</strong>, <strong>Product</strong>, <strong>System</strong> and <strong>Process
-documentation</strong>. These structures can be replicated for all forms of
-documentation needed by <strong>HOTOSM</strong>. It also includes specific tips for
-improving already existing documentation.</p>
-<h2 id="goals">Goals<a class="headerlink" href="#goals" title="Permanent link">&para;</a></h2>
-<ol>
-<li>Highlight the definitions of each type of documentation that are
-   commonly used on Github.</li>
-<li>Provide a foundation to lay information on top of, in order to
-   produce efficient documentation about any product or project in the
-   future.</li>
-<li>List key parts of each documentation type that aid the flow and
-   experience of the reader.</li>
-<li>Outline general tips to improve already existing documentation.</li>
-</ol>
-<h2 id="common-documentation-types-on-github">Common Documentation Types On Github<a class="headerlink" href="#common-documentation-types-on-github" title="Permanent link">&para;</a></h2>
-<p>I have found 4 main documentation types through my own personal
-research. They can all be written individually but often coincide to
-complement specific parts of each other. For example, Product
-documentation may include some Process documentation under the Usage
-section, demonstrating how to use that product. These 4 types in full,
-are as follows:</p>
+<h1 id="troubleshooting">Troubleshooting 🆘<a class="headerlink" href="#troubleshooting" title="Permanent link">&para;</a></h1>
+<h2 id="running-fmtm-standalone">Running FMTM standalone<a class="headerlink" href="#running-fmtm-standalone" title="Permanent link">&para;</a></h2>
 <ul>
-<li><strong>Product Documentation</strong> </li>
-<li><strong>Project Documentation</strong></li>
-<li><strong>System Documentation</strong></li>
-<li><strong>Process Documentation</strong></li>
+<li>Although it's easiest to use Docker, sometimes it may no be feasible, or not preferred.</li>
+<li>We use a tool called PDM to manage dependencies.</li>
+<li>PDM can run in two modes: venv and PEP582 (<code>__pypackages__</code>).</li>
+<li>Be careful when running FMTM you are not accidentally pulling in your system packages.</li>
 </ul>
-<h3 id="1-structure-for-product-documentation">1. Structure for Product Documentation<a class="headerlink" href="#1-structure-for-product-documentation" title="Permanent link">&para;</a></h3>
-<p>Product documentation is the process of recording key information
-(almost everything you need to know) about a product,  including how
-to use it. Product documentation may have form of <strong>Process
-documentation</strong> within it (this will be further explained later on). A
-flexible and reusable structure of essential components of product
-documentation is as follows:
-- Overview
-- Introduction: What the product is, what it does, the target audience, etc.
-- Features: A breakdown of each integral part of the product, their
-  functionality and purpose
-- Benefits: How the features give users an edge over other similar
-  products. In other words, what’s in it for the user.
-- Usage: A step by step process of how to use the product
-- Support / Frequently Asked Questions (about the product)
-- License</p>
-<p>The points stated above can be used in that order and can also be
-switched around based on convenience and the type of
-product. Additionally, other points can be added if necessary, but
-these are what I believe to be some of the most important.</p>
-<h3 id="2-structure-for-project-documentation">2. Structure for Project Documentation<a class="headerlink" href="#2-structure-for-project-documentation" title="Permanent link">&para;</a></h3>
-<p>Project documentation is the process of recording the key project
-details that are needed to implement a project. It’s like a roadmap of
-what the project is and all necessary information about what it
-entails. Main structural components are in the following order:
-- Overview
-- Vision
-- Aim / Mission
-- Introduction
-- Project plan
-- Project schedule
-- Tools and Features
-- Access
-- Resources
-- Support / Guidelines</p>
-<h3 id="3-structure-for-system-documentation">3. Structure for System Documentation<a class="headerlink" href="#3-structure-for-system-documentation" title="Permanent link">&para;</a></h3>
-<p>System documentation is an all-encompassing record of details of a
-full working system. It is very similar to the structure of product
-documentation but it’s usually on a wider scale. It may even include
-some forms of product and process documentation within it. In addition
-to the structure of product documentation above, other key components
-it might include are: <strong>architecture design</strong>, <strong>program source code</strong>
-and <strong>maintenance / help guide</strong>.</p>
-<h3 id="4-structure-for-process-documentation">4. Structure for Process Documentation<a class="headerlink" href="#4-structure-for-process-documentation" title="Permanent link">&para;</a></h3>
-<p>Process documentation is capturing and listing all steps involved in
-doing a task. It is the full explanation of a process, step by
-step. Process documentation is very useful in other documentation
-forms. As mentioned earlier, it can be used within <strong>System</strong>,
-<strong>Product</strong> or <strong>Project</strong> documentation, to explain a process. The
-format is usually:
-- Overview
-- Introduction
-- Explanation steps (breakdown of the task)
-- Help (if any problems occur while acting on the steps)</p>
-<p>The structures I have suggested above are similar, consistent and can
-be easily replicated for various projects, systems and products. They
-work well when integrated together, balancing out issues where
-necessary. Each structure also serves as a foundation that can be
-added to and built upon.</p>
-<h2 id="improving-existing-documentation">Improving Existing Documentation<a class="headerlink" href="#improving-existing-documentation" title="Permanent link">&para;</a></h2>
-<ol>
-<li>
-<p><strong>Acronyms should be stated in full before repetitive
-   use</strong>. Acronyms like ODK, OSM, etc, should be stated in full before
-   use or after each use within brackets e.g ODK (Open Data Kit). This
-   negates confusion for readers / users and just simplifies things.</p>
-</li>
-<li>
-<p><strong>Important features should be put in bold</strong>. For example “select
-   from map” and ‘’ODK Collect” can be easily overlooked by readers if
-   they aren't highlighted, even though they are important features.</p>
-</li>
-<li>
-<p><strong>Generally simplifying words and phrases</strong>. This makes
-   documentation more user friendly and much easier to understand,
-   since users come from all different backgrounds. For example:</p>
-<p>“ODK incorporates a new functionality” can become “ODK has brought in a new feature”.</p>
-<p>“Field Mappers select (or are allocated) individual tasks within a
-project’s AOI” could be changed to “Field Mappers choose or are
-given tasks that are part of a project’s Areas Of Interest.”</p>
-</li>
-<li>
-<p><strong>Avoid long paragraphs</strong>. Short paragraphs that pass a clear
-    message are less clumsy and flustering for readers. Breaking down
-    topics into little, easy to understand chunks, is more user
-    friendly.</p>
-</li>
-<li>
-<p><strong>Maintain a positive tone in the writing.</strong>. Keep the text
-   positive and informative. Avoid words like ‘obviously’ and
-   ‘basically’,  that may be interpreted as demeaning or
-   condescending. Do not expect readers to have a certain amount of
-   knowledge on specific aspects, break down everything that needs to
-   be broken down.</p>
-</li>
-<li>
-<p><strong>Constantly update your documentation</strong>. Projects, products and
-   systems are always evolving. Thus, it is necessary to keep
-   documentation up to date with any new changes.</p>
-</li>
-<li>
-<p><strong>Consistency in the documentation format</strong>. Maintaining
-   consistency is a key aspect of creating clear and effective
-   documentation.This consistency includes but is not limited to
-   elements like numbering, font styles, heading sizes, and spacing.</p>
-<p>Using the same font for all headings and subheadings can help
-readers quickly identify important sections of the
-document. Similarly, using consistent spacing between paragraphs
-and sections can make the document more visually appealing and
-easier to follow. This helps to create a documentation that is
-clear, effective, and easy to use.</p>
-</li>
-</ol>
+<h3 id="tips">Tips<a class="headerlink" href="#tips" title="Permanent link">&para;</a></h3>
+<ul>
+<li>If a directory <code>__pypackages__</code> exists, delete it and attempt to
+  <code>pdm install</code>
+  again.</li>
+<li>If the <code>__pypackages__</code> directory returns, then force using venv instead
+  <code>pdm config python.use_venv true</code>
+  and remove the directory again.</li>
+<li>Troubleshoot the packages PDM sees with:
+  <code>pdm run pip list</code></li>
+<li>Check a package can be imported in the PDM-based Python environment:</li>
+</ul>
+<div class="highlight"><pre><span></span><code>pdm<span class="w"> </span>run<span class="w"> </span>python
+import<span class="w"> </span>fastapi
+</code></pre></div>
+<p>If you receive errors such as:</p>
+<div class="highlight"><pre><span></span><code>pydantic.error_wrappers.ValidationError:<span class="w"> </span><span class="m">3</span><span class="w"> </span>validation<span class="w"> </span>errors<span class="w"> </span><span class="k">for</span><span class="w"> </span>Settings
+OSM_URL
+<span class="w">  </span>field<span class="w"> </span>required<span class="w"> </span><span class="o">(</span><span class="nv">type</span><span class="o">=</span>value_error.missing<span class="o">)</span>
+OSM_SCOPE
+<span class="w">  </span>field<span class="w"> </span>required<span class="w"> </span><span class="o">(</span><span class="nv">type</span><span class="o">=</span>value_error.missing<span class="o">)</span>
+OSM_LOGIN_REDIRECT_URI
+<span class="w">  </span>field<span class="w"> </span>required<span class="w"> </span><span class="o">(</span><span class="nv">type</span><span class="o">=</span>value_error.missing<span class="o">)</span>
+</code></pre></div>
+<p>Then you need to set the env variables on your system.</p>
+<p>If you would rather not do this,
+an alternative can be to feed them into the pdm command:</p>
+<div class="highlight"><pre><span></span><code><span class="nv">FRONTEND_MAIN_URL</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="nv">FRONTEND_MAP_URL</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
+<span class="nv">OSM_CLIENT_ID</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="nv">OSM_CLIENT_SECRET</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="nv">OSM_SECRET_KEY</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="w"> </span><span class="se">\</span>
+pdm<span class="w"> </span>run<span class="w"> </span>uvicorn<span class="w"> </span>app.main:api<span class="w"> </span>--host<span class="w"> </span><span class="m">0</span>.0.0.0<span class="w"> </span>--port<span class="w"> </span><span class="m">8000</span>
+</code></pre></div>
 
 
 
@@ -1097,10 +908,10 @@ clear, effective, and easy to use.</p>
       <div class="md-dialog__inner md-typeset"></div>
     </div>
     
-    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.dfff1995.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="../assets/javascripts/bundle.dff1b7c8.min.js"></script>
+      <script src="../../assets/javascripts/bundle.dff1b7c8.min.js"></script>
       
     
   </body>
