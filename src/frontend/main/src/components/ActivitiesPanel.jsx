@@ -81,10 +81,8 @@ const ActivitiesPanel = ({ defaultTheme, state, params, map, view, mapDivPostion
     }
 
     let finalTaskHistory = taskHistories.filter((task) => {
-      return (
-        task.taskId.toString().includes(searchText) ||
-        task.action_text.split(':')[1].replace(/\s+/g, '').toString().includes(searchText.toString())
-      );
+      return task.taskId.toString().includes(searchText) ||
+      task.action_text.split(':')[1].replace(/\s+/g, '').toString().includes(searchText.toString());
     });
 
     if (searchText != '') {
